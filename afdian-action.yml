@@ -8,12 +8,10 @@ on:
 jobs:
   call-afdian-action:
     name: Call reusable afdian action workflow
-    runs-on: ubuntu-latest
+    uses: LuoChu-NB2Dev/.github/.github/workflows/afdian-action.yml@master
     permissions:
       contents: write
-    steps:
-      - name: Call template afdian action workflow
-        uses: LuoChu-NB2Dev/.github/.github/workflows/afdian-action.yml@master
-        secrets:
-          AFDIAN_USERID: ${{ secrets.AFDIAN_USERID }}
-          AFDIAN_TOKEN: ${{ secrets.AFDIAN_TOKEN }}
+      pull-requests: write
+    secrets:
+      AFDIAN_USERID: ${{ secrets.AFDIAN_USERID }}
+      AFDIAN_TOKEN: ${{ secrets.AFDIAN_TOKEN }}
