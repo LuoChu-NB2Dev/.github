@@ -5,7 +5,7 @@
     string[] currentRepoPlanIds = new[] {
         "aa197b8ef00011efa49c5254001e7c00",
         "1c74a62442de11f08c2252540025c377",
-        "97ceb326f15d11ec8dbf52540025c377"
+        ""
         };
     // 排除自己
     viewModel.Sponsor.data.list = viewModel.Sponsor.data.list.Where(m => m.user.user_id != meUserId).ToList();
