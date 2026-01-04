@@ -34,19 +34,19 @@ jobs:
         if: steps.version.outputs.VERSION != steps.version.outputs.TAG_VERSION
         run: exit 1
 
-      # - name: Check if draft release exists
-      #   id: check_draft
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     TAG_NAME="${{ steps.version.outputs.TAG_NAME }}"
-      #     DRAFT_EXISTS=$(gh release list --json tagName,isDraft --jq ".[] | select(.tagName == \"$TAG_NAME\" and .isDraft == true) | .tagName")
-      #     if [ -z "$DRAFT_EXISTS" ]; then
-      #       echo "错误: 标签 $TAG_NAME 对应的草稿发布不存在，请先在 GitHub 上创建草稿发布"
-      #       echo $(gh release list --json tagName,isDraft)
-      #       exit 1
-      #     fi
-      #     echo "找到草稿发布: $TAG_NAME"
+      - name: Check if draft release exists
+        id: check_draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="${{ steps.version.outputs.TAG_NAME }}"
+          DRAFT_EXISTS=$(gh release list --json tagName,isDraft --jq ".[] | select(.tagName == \"$TAG_NAME\" and .isDraft == true) | .tagName")
+          if [ -z "$DRAFT_EXISTS" ]; then
+            echo "错误: 标签 $TAG_NAME 对应的草稿发布不存在，请先在 GitHub 上创建草稿发布"
+            echo $(gh release list --json tagName,isDraft)
+            exit 1
+          fi
+          echo "找到草稿发布: $TAG_NAME"
 
   # 阶段 2: 更新日志阶段 - 更新 CHANGELOG.md 和 README.md
   # update-changelog:
