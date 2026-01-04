@@ -1,4 +1,4 @@
-name: afdian-sync
+name: afdian-sync (reuseable)
 
 on:
   workflow_call:
