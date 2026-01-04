@@ -143,15 +143,15 @@ jobs:
             dist/*.tar.gz
             dist/*.whl
 
-      - name: Commit changelog updates
-        run: |
-          git config --local user.email "bot@luochu.cc"
-          git config --local user.name "luochu-bot"
-          if git diff --quiet; then
-            echo "📝 没有变更需要提交"
-          else
-            git add CHANGELOG.md README.md
-            git commit -m "⬆️ auto update changelog for release ${{ needs.check.outputs.version }}" -m "Changelog update was created by release workflow"
-            git push origin HEAD:${{ github.event.repository.default_branch }}
-            echo "✅ 已提交并推送更改"
-          fi
+      # - name: Commit changelog updates
+      #   run: |
+      #     git config --local user.email "bot@luochu.cc"
+      #     git config --local user.name "luochu-bot"
+      #     if git diff --quiet; then
+      #       echo "📝 没有变更需要提交"
+      #     else
+      #       git add CHANGELOG.md README.md
+      #       git commit -m "⬆️ auto update changelog for release ${{ needs.check.outputs.version }}" -m "Changelog update was created by release workflow"
+      #       git push origin HEAD:${{ github.event.repository.default_branch }}
+      #       echo "✅ 已提交并推送更改"
+      #     fi
