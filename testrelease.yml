@@ -12,10 +12,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  publish-pypi:
+  publish-testpypi:
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
     needs: call-template

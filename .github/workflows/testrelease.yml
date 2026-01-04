@@ -27,7 +27,7 @@ jobs:
         id: version
         run: |
           echo "VERSION=$(uv version --short)" >> $GITHUB_OUTPUT
-          echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          echo "TAG_VERSION=${GITHUB_REF#refs/tags/t}" >> $GITHUB_OUTPUT
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Check Version
