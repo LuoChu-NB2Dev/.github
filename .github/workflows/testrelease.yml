@@ -43,7 +43,6 @@ jobs:
           DRAFT_EXISTS=$(gh release list --json tagName,isDraft --jq ".[] | select(.tagName == \"$TAG_NAME\" and .isDraft == true) | .tagName")
           if [ -z "$DRAFT_EXISTS" ]; then
             echo "错误: 标签 $TAG_NAME 对应的草稿发布不存在，请先在 GitHub 上创建草稿发布"
-            echo $(gh release list --json tagName,isDraft)
             exit 1
           fi
           echo "找到草稿发布: $TAG_NAME"
