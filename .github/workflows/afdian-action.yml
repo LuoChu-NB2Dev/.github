@@ -1,4 +1,4 @@
-name: afdian-sync (reuseable)
+name: Afdian Sync (reuseable)
 
 on:
   workflow_call:
@@ -46,14 +46,22 @@ jobs:
         run: rm -rf template-repo
 
       # 下方为 直接 push 到目标分支, 当然你也可以选择 Pull Request 方式
-      - name: Commit files
+      - name: Commit changes (cancel run if no changes)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "bot@luochu.cc"
           git config --local user.name "luochu-bot"
-          git commit -m "⬆️ auto update sponsor" -a
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@master # https://github.com/ad-m/github-push-action
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master # 注意修改为你的分支, 例如: master
+          # stage all changes
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit — cancelling run."
+            # cancel the current run via REST API
+            curl -s -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel
+            exit 0
+          else
+            git commit -m "⬆️ auto update sponsor" -m "Changelog update was created by afdian-sync workflow"
+            git push origin HEAD:${{ github.event.repository.default_branch }}
+          fi

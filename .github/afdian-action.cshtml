@@ -1,11 +1,16 @@
 @{
     var viewModel = (Afdian.Action.ViewModels.AfdianViewModel)@Model;
     string meUserId = "97ceb326f15d11ec8dbf52540025c377";
-    string currentRepoPlanId = "aa197b8ef00011efa49c5254001e7c00";
+    // 支持多个 plan id，按需在数组中追加
+    string[] currentRepoPlanIds = new[] {
+        "aa197b8ef00011efa49c5254001e7c00",
+        "1c74a62442de11f08c2252540025c377",
+        "97ceb326f15d11ec8dbf52540025c377"
+        };
     // 排除自己
     viewModel.Sponsor.data.list = viewModel.Sponsor.data.list.Where(m => m.user.user_id != meUserId).ToList();
     // 只要 当前仓库 对应的计划
-    viewModel.Order.data.list = viewModel.Order.data.list.Where(m => m.plan_id == currentRepoPlanId).ToList();
+    viewModel.Order.data.list = viewModel.Order.data.list.Where(m => currentRepoPlanIds.Contains(m.plan_id)).ToList();
 }
 
 @for (int i = 0; i < viewModel.Sponsor.data.list.Count(); i++)
@@ -14,7 +19,7 @@
         var sponsorItem  = viewModel.Sponsor.data.list[i];
      }
 
-<a href="https://afdian.net/u/@sponsorItem.user.user_id">
+<a href="https://ifdian.net/u/@sponsorItem.user.user_id">
     <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
 </a>
 }
@@ -48,7 +53,7 @@
         }
      }
 
-<a href="https://afdian.net/u/@sponsorItem.user.user_id">
+<a href="https://ifdian.net/u/@sponsorItem.user.user_id">
 @sponsorItem.user.name
 </a>
 <span>( @orderNum 次赞助, 共 ￥@totalMoney ) 留言: @remarks</span><br>
