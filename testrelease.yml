@@ -19,7 +19,7 @@ jobs:
     needs: call-template
     environment:
       name: testpypi
-      url: https://pypi.org/p/nonebot-plugin-template/
+      url: https://test.pypi.orgp/nonebot-plugin-template/
     permissions:
       id-token: write
       contents: write
